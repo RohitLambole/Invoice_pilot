@@ -1,0 +1,515 @@
+{
+  "pbtResults": {
+    "2.2 Write property test for amount cap and currency invariant": {
+      "status": "passed",
+      "lastRunTimestamp": 1794319701286
+    },
+    "4.2 Write property test for audit log completeness": {
+      "status": "passed",
+      "lastRunTimestamp": 1794319708915
+    },
+    "6.2 Write property test for tool whitelist conformance": {
+      "status": "passed",
+      "lastRunTimestamp": 1794319715112
+    },
+    "8.2 Write property test for approval gate invariant": {
+      "status": "passed",
+      "lastRunTimestamp": 1794319721259
+    }
+  },
+  "executionHistory": {
+    "0.1 Run integration spike to verify unverified toolkit assumptions": [
+      {
+        "executionId": "6028c949-3e79-47d9-af4a-520351fcf369",
+        "chatSessionId": "sess_11fd2838-b9cf-442d-94b5-b9d23f449930",
+        "timestamp": 1794059246319
+      },
+      {
+        "executionId": "6028c949-3e79-47d9-af4a-520351fcf369",
+        "chatSessionId": "sess_11fd2838-b9cf-442d-94b5-b9d23f449930",
+        "timestamp": 1794059263119
+      },
+      {
+        "executionId": "6028c949-3e79-47d9-af4a-520351fcf369",
+        "chatSessionId": "sess_11fd2838-b9cf-442d-94b5-b9d23f449930",
+        "timestamp": 1794060389623
+      }
+    ],
+    "1.1 Create project scaffold and dependency/config templates": [
+      {
+        "executionId": "6028c949-3e79-47d9-af4a-520351fcf369",
+        "chatSessionId": "sess_11fd2838-b9cf-442d-94b5-b9d23f449930",
+        "timestamp": 1794059246634
+      },
+      {
+        "executionId": "6028c949-3e79-47d9-af4a-520351fcf369",
+        "chatSessionId": "sess_11fd2838-b9cf-442d-94b5-b9d23f449930",
+        "timestamp": 1794060395569
+      },
+      {
+        "executionId": "2ebc41e1-c80d-43c0-b0d7-4ce20c5bcfd8",
+        "chatSessionId": "sess_11fd2838-b9cf-442d-94b5-b9d23f449930",
+        "timestamp": 1794060447548
+      }
+    ],
+    "1.2 Implement config.py": [
+      {
+        "executionId": "6028c949-3e79-47d9-af4a-520351fcf369",
+        "chatSessionId": "sess_11fd2838-b9cf-442d-94b5-b9d23f449930",
+        "timestamp": 1794059246820
+      },
+      {
+        "executionId": "6028c949-3e79-47d9-af4a-520351fcf369",
+        "chatSessionId": "sess_11fd2838-b9cf-442d-94b5-b9d23f449930",
+        "timestamp": 1794060399068
+      },
+      {
+        "executionId": "875d37c6-c1eb-48c4-ae12-53fee7060b00",
+        "chatSessionId": "sess_f58267e0-fb07-49f2-b6ba-744b1f309879",
+        "timestamp": 1794108182250
+      },
+      {
+        "executionId": "875d37c6-c1eb-48c4-ae12-53fee7060b00",
+        "chatSessionId": "sess_f58267e0-fb07-49f2-b6ba-744b1f309879",
+        "timestamp": 1794108503286
+      },
+      {
+        "executionId": "875d37c6-c1eb-48c4-ae12-53fee7060b00",
+        "chatSessionId": "sess_f58267e0-fb07-49f2-b6ba-744b1f309879",
+        "timestamp": 1794108784163
+      }
+    ],
+    "2.1 Implement models.py with Pydantic data models": [
+      {
+        "executionId": "6028c949-3e79-47d9-af4a-520351fcf369",
+        "chatSessionId": "sess_11fd2838-b9cf-442d-94b5-b9d23f449930",
+        "timestamp": 1794059247033
+      },
+      {
+        "executionId": "6028c949-3e79-47d9-af4a-520351fcf369",
+        "chatSessionId": "sess_11fd2838-b9cf-442d-94b5-b9d23f449930",
+        "timestamp": 1794060406118
+      },
+      {
+        "executionId": "875d37c6-c1eb-48c4-ae12-53fee7060b00",
+        "chatSessionId": "sess_f58267e0-fb07-49f2-b6ba-744b1f309879",
+        "timestamp": 1794108182363
+      },
+      {
+        "executionId": "875d37c6-c1eb-48c4-ae12-53fee7060b00",
+        "chatSessionId": "sess_f58267e0-fb07-49f2-b6ba-744b1f309879",
+        "timestamp": 1794108792966
+      }
+    ],
+    "2.2 Write property test for amount cap and currency invariant": [
+      {
+        "executionId": "6028c949-3e79-47d9-af4a-520351fcf369",
+        "chatSessionId": "sess_11fd2838-b9cf-442d-94b5-b9d23f449930",
+        "timestamp": 1794059247291
+      },
+      {
+        "executionId": "875d37c6-c1eb-48c4-ae12-53fee7060b00",
+        "chatSessionId": "sess_f58267e0-fb07-49f2-b6ba-744b1f309879",
+        "timestamp": 1794108182581
+      },
+      {
+        "executionId": "34e90c73-e473-42b7-b72f-f66741a94b8f",
+        "chatSessionId": "sess_f58267e0-fb07-49f2-b6ba-744b1f309879",
+        "timestamp": 1794319279594
+      },
+      {
+        "executionId": "34e90c73-e473-42b7-b72f-f66741a94b8f",
+        "chatSessionId": "sess_f58267e0-fb07-49f2-b6ba-744b1f309879",
+        "timestamp": 1794319821451
+      }
+    ],
+    "3.1 Implement client_registry.py": [
+      {
+        "executionId": "6028c949-3e79-47d9-af4a-520351fcf369",
+        "chatSessionId": "sess_11fd2838-b9cf-442d-94b5-b9d23f449930",
+        "timestamp": 1794059247495
+      },
+      {
+        "executionId": "6028c949-3e79-47d9-af4a-520351fcf369",
+        "chatSessionId": "sess_11fd2838-b9cf-442d-94b5-b9d23f449930",
+        "timestamp": 1794060410841
+      },
+      {
+        "executionId": "875d37c6-c1eb-48c4-ae12-53fee7060b00",
+        "chatSessionId": "sess_f58267e0-fb07-49f2-b6ba-744b1f309879",
+        "timestamp": 1794108182699
+      },
+      {
+        "executionId": "875d37c6-c1eb-48c4-ae12-53fee7060b00",
+        "chatSessionId": "sess_f58267e0-fb07-49f2-b6ba-744b1f309879",
+        "timestamp": 1794109109913
+      }
+    ],
+    "4.1 Implement audit_log.py": [
+      {
+        "executionId": "6028c949-3e79-47d9-af4a-520351fcf369",
+        "chatSessionId": "sess_11fd2838-b9cf-442d-94b5-b9d23f449930",
+        "timestamp": 1794059247682
+      },
+      {
+        "executionId": "875d37c6-c1eb-48c4-ae12-53fee7060b00",
+        "chatSessionId": "sess_f58267e0-fb07-49f2-b6ba-744b1f309879",
+        "timestamp": 1794108182982
+      },
+      {
+        "executionId": "875d37c6-c1eb-48c4-ae12-53fee7060b00",
+        "chatSessionId": "sess_f58267e0-fb07-49f2-b6ba-744b1f309879",
+        "timestamp": 1794109118680
+      }
+    ],
+    "4.2 Write property test for audit log completeness": [
+      {
+        "executionId": "6028c949-3e79-47d9-af4a-520351fcf369",
+        "chatSessionId": "sess_11fd2838-b9cf-442d-94b5-b9d23f449930",
+        "timestamp": 1794059247885
+      },
+      {
+        "executionId": "875d37c6-c1eb-48c4-ae12-53fee7060b00",
+        "chatSessionId": "sess_f58267e0-fb07-49f2-b6ba-744b1f309879",
+        "timestamp": 1794108183093
+      },
+      {
+        "executionId": "34e90c73-e473-42b7-b72f-f66741a94b8f",
+        "chatSessionId": "sess_f58267e0-fb07-49f2-b6ba-744b1f309879",
+        "timestamp": 1794319821804
+      }
+    ],
+    "5.1 Implement tools.py with custom LangChain proposal tools": [
+      {
+        "executionId": "6028c949-3e79-47d9-af4a-520351fcf369",
+        "chatSessionId": "sess_11fd2838-b9cf-442d-94b5-b9d23f449930",
+        "timestamp": 1794059248106
+      },
+      {
+        "executionId": "875d37c6-c1eb-48c4-ae12-53fee7060b00",
+        "chatSessionId": "sess_f58267e0-fb07-49f2-b6ba-744b1f309879",
+        "timestamp": 1794108183176
+      },
+      {
+        "executionId": "875d37c6-c1eb-48c4-ae12-53fee7060b00",
+        "chatSessionId": "sess_f58267e0-fb07-49f2-b6ba-744b1f309879",
+        "timestamp": 1794109127574
+      },
+      {
+        "executionId": "875d37c6-c1eb-48c4-ae12-53fee7060b00",
+        "chatSessionId": "sess_f58267e0-fb07-49f2-b6ba-744b1f309879",
+        "timestamp": 1794109521068
+      }
+    ],
+    "5.2 Write unit tests for proposal validation": [
+      {
+        "executionId": "6028c949-3e79-47d9-af4a-520351fcf369",
+        "chatSessionId": "sess_11fd2838-b9cf-442d-94b5-b9d23f449930",
+        "timestamp": 1794059248464
+      },
+      {
+        "executionId": "875d37c6-c1eb-48c4-ae12-53fee7060b00",
+        "chatSessionId": "sess_f58267e0-fb07-49f2-b6ba-744b1f309879",
+        "timestamp": 1794108183299
+      }
+    ],
+    "6.1 Implement agent.py with create_agent, system prompt, and tool whitelist": [
+      {
+        "executionId": "6028c949-3e79-47d9-af4a-520351fcf369",
+        "chatSessionId": "sess_11fd2838-b9cf-442d-94b5-b9d23f449930",
+        "timestamp": 1794059248822
+      },
+      {
+        "executionId": "875d37c6-c1eb-48c4-ae12-53fee7060b00",
+        "chatSessionId": "sess_f58267e0-fb07-49f2-b6ba-744b1f309879",
+        "timestamp": 1794108183461
+      },
+      {
+        "executionId": "34e90c73-e473-42b7-b72f-f66741a94b8f",
+        "chatSessionId": "sess_f58267e0-fb07-49f2-b6ba-744b1f309879",
+        "timestamp": 1794315513430
+      },
+      {
+        "executionId": "34e90c73-e473-42b7-b72f-f66741a94b8f",
+        "chatSessionId": "sess_f58267e0-fb07-49f2-b6ba-744b1f309879",
+        "timestamp": 1794319269372
+      }
+    ],
+    "6.2 Write property test for tool whitelist conformance": [
+      {
+        "executionId": "6028c949-3e79-47d9-af4a-520351fcf369",
+        "chatSessionId": "sess_11fd2838-b9cf-442d-94b5-b9d23f449930",
+        "timestamp": 1794059249136
+      },
+      {
+        "executionId": "875d37c6-c1eb-48c4-ae12-53fee7060b00",
+        "chatSessionId": "sess_f58267e0-fb07-49f2-b6ba-744b1f309879",
+        "timestamp": 1794108183630
+      },
+      {
+        "executionId": "34e90c73-e473-42b7-b72f-f66741a94b8f",
+        "chatSessionId": "sess_f58267e0-fb07-49f2-b6ba-744b1f309879",
+        "timestamp": 1794319822184
+      }
+    ],
+    "7.1 Implement paypal_service.py (app-controlled write operations)": [
+      {
+        "executionId": "6028c949-3e79-47d9-af4a-520351fcf369",
+        "chatSessionId": "sess_11fd2838-b9cf-442d-94b5-b9d23f449930",
+        "timestamp": 1794059249456
+      },
+      {
+        "executionId": "875d37c6-c1eb-48c4-ae12-53fee7060b00",
+        "chatSessionId": "sess_f58267e0-fb07-49f2-b6ba-744b1f309879",
+        "timestamp": 1794108183855
+      },
+      {
+        "executionId": "875d37c6-c1eb-48c4-ae12-53fee7060b00",
+        "chatSessionId": "sess_f58267e0-fb07-49f2-b6ba-744b1f309879",
+        "timestamp": 1794109536059
+      }
+    ],
+    "8.1 Implement approval.py state machine and execution orchestration": [
+      {
+        "executionId": "6028c949-3e79-47d9-af4a-520351fcf369",
+        "chatSessionId": "sess_11fd2838-b9cf-442d-94b5-b9d23f449930",
+        "timestamp": 1794059249696
+      },
+      {
+        "executionId": "875d37c6-c1eb-48c4-ae12-53fee7060b00",
+        "chatSessionId": "sess_f58267e0-fb07-49f2-b6ba-744b1f309879",
+        "timestamp": 1794108184000
+      },
+      {
+        "executionId": "875d37c6-c1eb-48c4-ae12-53fee7060b00",
+        "chatSessionId": "sess_f58267e0-fb07-49f2-b6ba-744b1f309879",
+        "timestamp": 1794109544809
+      }
+    ],
+    "8.2 Write property test for approval gate invariant": [
+      {
+        "executionId": "6028c949-3e79-47d9-af4a-520351fcf369",
+        "chatSessionId": "sess_11fd2838-b9cf-442d-94b5-b9d23f449930",
+        "timestamp": 1794059249989
+      },
+      {
+        "executionId": "875d37c6-c1eb-48c4-ae12-53fee7060b00",
+        "chatSessionId": "sess_f58267e0-fb07-49f2-b6ba-744b1f309879",
+        "timestamp": 1794108184247
+      },
+      {
+        "executionId": "34e90c73-e473-42b7-b72f-f66741a94b8f",
+        "chatSessionId": "sess_f58267e0-fb07-49f2-b6ba-744b1f309879",
+        "timestamp": 1794319822531
+      }
+    ],
+    "9.1 Implement app.py session state and chat interface": [
+      {
+        "executionId": "6028c949-3e79-47d9-af4a-520351fcf369",
+        "chatSessionId": "sess_11fd2838-b9cf-442d-94b5-b9d23f449930",
+        "timestamp": 1794059250282
+      },
+      {
+        "executionId": "875d37c6-c1eb-48c4-ae12-53fee7060b00",
+        "chatSessionId": "sess_f58267e0-fb07-49f2-b6ba-744b1f309879",
+        "timestamp": 1794108184850
+      },
+      {
+        "executionId": "4383b334-a76d-436a-bc0c-57ab9dc05990",
+        "chatSessionId": "sess_f58267e0-fb07-49f2-b6ba-744b1f309879",
+        "timestamp": 1794330230683
+      },
+      {
+        "executionId": "4383b334-a76d-436a-bc0c-57ab9dc05990",
+        "chatSessionId": "sess_f58267e0-fb07-49f2-b6ba-744b1f309879",
+        "timestamp": 1794331612140
+      }
+    ],
+    "9.2 Implement approval card rendering and approve/reject handlers": [
+      {
+        "executionId": "6028c949-3e79-47d9-af4a-520351fcf369",
+        "chatSessionId": "sess_11fd2838-b9cf-442d-94b5-b9d23f449930",
+        "timestamp": 1794059250541
+      },
+      {
+        "executionId": "875d37c6-c1eb-48c4-ae12-53fee7060b00",
+        "chatSessionId": "sess_f58267e0-fb07-49f2-b6ba-744b1f309879",
+        "timestamp": 1794108185029
+      },
+      {
+        "executionId": "eab58e27-e9ca-4f59-b1ef-f02bcdd16ce6",
+        "chatSessionId": "sess_f58267e0-fb07-49f2-b6ba-744b1f309879",
+        "timestamp": 1794332471207
+      },
+      {
+        "executionId": "eab58e27-e9ca-4f59-b1ef-f02bcdd16ce6",
+        "chatSessionId": "sess_f58267e0-fb07-49f2-b6ba-744b1f309879",
+        "timestamp": 1794334520062
+      }
+    ],
+    "9.3 Implement audit log panel and error handling in UI": [
+      {
+        "executionId": "6028c949-3e79-47d9-af4a-520351fcf369",
+        "chatSessionId": "sess_11fd2838-b9cf-442d-94b5-b9d23f449930",
+        "timestamp": 1794059250829
+      },
+      {
+        "executionId": "875d37c6-c1eb-48c4-ae12-53fee7060b00",
+        "chatSessionId": "sess_f58267e0-fb07-49f2-b6ba-744b1f309879",
+        "timestamp": 1794108185287
+      }
+    ],
+    "10. Checkpoint - Ensure all tests pass": [
+      {
+        "executionId": "6028c949-3e79-47d9-af4a-520351fcf369",
+        "chatSessionId": "sess_11fd2838-b9cf-442d-94b5-b9d23f449930",
+        "timestamp": 1794059251040
+      },
+      {
+        "executionId": "875d37c6-c1eb-48c4-ae12-53fee7060b00",
+        "chatSessionId": "sess_f58267e0-fb07-49f2-b6ba-744b1f309879",
+        "timestamp": 1794108185530
+      }
+    ],
+    "11.1 Write README.md": [
+      {
+        "executionId": "6028c949-3e79-47d9-af4a-520351fcf369",
+        "chatSessionId": "sess_11fd2838-b9cf-442d-94b5-b9d23f449930",
+        "timestamp": 1794059251237
+      },
+      {
+        "executionId": "875d37c6-c1eb-48c4-ae12-53fee7060b00",
+        "chatSessionId": "sess_f58267e0-fb07-49f2-b6ba-744b1f309879",
+        "timestamp": 1794108185768
+      }
+    ],
+    "11.2 Write LICENSE and FEATURES.md": [
+      {
+        "executionId": "6028c949-3e79-47d9-af4a-520351fcf369",
+        "chatSessionId": "sess_11fd2838-b9cf-442d-94b5-b9d23f449930",
+        "timestamp": 1794059251434
+      },
+      {
+        "executionId": "875d37c6-c1eb-48c4-ae12-53fee7060b00",
+        "chatSessionId": "sess_f58267e0-fb07-49f2-b6ba-744b1f309879",
+        "timestamp": 1794108185944
+      }
+    ],
+    "12. Checkpoint - Final verification": [
+      {
+        "executionId": "6028c949-3e79-47d9-af4a-520351fcf369",
+        "chatSessionId": "sess_11fd2838-b9cf-442d-94b5-b9d23f449930",
+        "timestamp": 1794059251647
+      },
+      {
+        "executionId": "875d37c6-c1eb-48c4-ae12-53fee7060b00",
+        "chatSessionId": "sess_f58267e0-fb07-49f2-b6ba-744b1f309879",
+        "timestamp": 1794108186085
+      }
+    ],
+    "13.1 Implement batch overdue reminder proposals": [
+      {
+        "executionId": "6028c949-3e79-47d9-af4a-520351fcf369",
+        "chatSessionId": "sess_11fd2838-b9cf-442d-94b5-b9d23f449930",
+        "timestamp": 1794059251823
+      },
+      {
+        "executionId": "875d37c6-c1eb-48c4-ae12-53fee7060b00",
+        "chatSessionId": "sess_f58267e0-fb07-49f2-b6ba-744b1f309879",
+        "timestamp": 1794108186232
+      }
+    ],
+    "14.1 Implement earnings dashboard with get_merchant_insights": [
+      {
+        "executionId": "6028c949-3e79-47d9-af4a-520351fcf369",
+        "chatSessionId": "sess_11fd2838-b9cf-442d-94b5-b9d23f449930",
+        "timestamp": 1794059251980
+      },
+      {
+        "executionId": "875d37c6-c1eb-48c4-ae12-53fee7060b00",
+        "chatSessionId": "sess_f58267e0-fb07-49f2-b6ba-744b1f309879",
+        "timestamp": 1794108186538
+      }
+    ],
+    "0. PayPal and Gemini integration spike (P0 - prerequisite for tasks 6.1 and 7.1)": [
+      {
+        "executionId": "6028c949-3e79-47d9-af4a-520351fcf369",
+        "chatSessionId": "sess_11fd2838-b9cf-442d-94b5-b9d23f449930",
+        "timestamp": 1794060389903
+      }
+    ],
+    "0.2 Live sandbox and Gemini tool-calling verification (PENDING — blocked on credentials)": [
+      {
+        "executionId": "875d37c6-c1eb-48c4-ae12-53fee7060b00",
+        "chatSessionId": "sess_f58267e0-fb07-49f2-b6ba-744b1f309879",
+        "timestamp": 1794108182019
+      }
+    ],
+    "3.2 Write unit tests for client registry": [
+      {
+        "executionId": "875d37c6-c1eb-48c4-ae12-53fee7060b00",
+        "chatSessionId": "sess_f58267e0-fb07-49f2-b6ba-744b1f309879",
+        "timestamp": 1794108182828
+      }
+    ],
+    "8.3 Write unit tests for approval engine state transitions (P0)": [
+      {
+        "executionId": "875d37c6-c1eb-48c4-ae12-53fee7060b00",
+        "chatSessionId": "sess_f58267e0-fb07-49f2-b6ba-744b1f309879",
+        "timestamp": 1794108184654
+      },
+      {
+        "executionId": "875d37c6-c1eb-48c4-ae12-53fee7060b00",
+        "chatSessionId": "sess_f58267e0-fb07-49f2-b6ba-744b1f309879",
+        "timestamp": 1794109553806
+      },
+      {
+        "executionId": "875d37c6-c1eb-48c4-ae12-53fee7060b00",
+        "chatSessionId": "sess_f58267e0-fb07-49f2-b6ba-744b1f309879",
+        "timestamp": 1794110731891
+      }
+    ],
+    "1. Project setup and configuration (P0)": [
+      {
+        "executionId": "875d37c6-c1eb-48c4-ae12-53fee7060b00",
+        "chatSessionId": "sess_f58267e0-fb07-49f2-b6ba-744b1f309879",
+        "timestamp": 1794108784507
+      }
+    ],
+    "7. PayPal write service (P0)": [
+      {
+        "executionId": "875d37c6-c1eb-48c4-ae12-53fee7060b00",
+        "chatSessionId": "sess_f58267e0-fb07-49f2-b6ba-744b1f309879",
+        "timestamp": 1794109536285
+      }
+    ],
+    "2. Core data models (P0)": [
+      {
+        "executionId": "34e90c73-e473-42b7-b72f-f66741a94b8f",
+        "chatSessionId": "sess_f58267e0-fb07-49f2-b6ba-744b1f309879",
+        "timestamp": 1794319821618
+      }
+    ],
+    "4. Audit log service (P0)": [
+      {
+        "executionId": "34e90c73-e473-42b7-b72f-f66741a94b8f",
+        "chatSessionId": "sess_f58267e0-fb07-49f2-b6ba-744b1f309879",
+        "timestamp": 1794319821944
+      }
+    ],
+    "6. Agent layer (P0)": [
+      {
+        "executionId": "34e90c73-e473-42b7-b72f-f66741a94b8f",
+        "chatSessionId": "sess_f58267e0-fb07-49f2-b6ba-744b1f309879",
+        "timestamp": 1794319822333
+      }
+    ],
+    "8. Approval engine (P0)": [
+      {
+        "executionId": "34e90c73-e473-42b7-b72f-f66741a94b8f",
+        "chatSessionId": "sess_f58267e0-fb07-49f2-b6ba-744b1f309879",
+        "timestamp": 1794319822664
+      }
+    ]
+  }
+}
