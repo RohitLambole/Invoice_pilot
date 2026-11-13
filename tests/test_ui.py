@@ -1,4 +1,4 @@
-"""Unit tests for the InvoicePilot Streamlit UI helper functions (``app.py``).
+﻿"""Unit tests for the InvoicePilot Streamlit UI helper functions (``app.py``).
 
 These tests exercise the testable logic in ``app.py`` — proposal extraction,
 proposal construction, and the approve/reject/auto-reject callback flow —
@@ -418,37 +418,37 @@ def test_error_state_hides_approve_button():
 
 
 def test_timeout_dismiss_then_approve_blocked():
-    """After dismissing a timeout_ambiguous proposal (state -> 'rejected'),
-    a subsequent approve attempt is blocked by the state guard
-    (duplicate_rejected)."""
+    """Dismissing a timeout_ambiguous proposal leaves state as timeout_ambiguous.
+    A subsequent approve attempt is blocked by the state guard.
+    """
     session_state = _session_state(_invoice_pending(), state="timeout_ambiguous")
     audit_log = session_state["audit_log"]
 
-    # Dismiss the timeout_ambiguous proposal — the Dismiss button calls
-    # handle_reject, which calls approval.reject, setting state to "rejected".
-    dismiss_result = app.handle_reject(session_state, audit_log)
-    assert dismiss_result["status"] == "rejected"
-    assert session_state["proposal_state"] == "rejected"
+    # Dismiss via handle_dismiss: clears the card without changing proposal_state.
+    app.handle_dismiss(session_state)
 
-    # handle_reject clears the pending proposal. Restore a pending proposal
-    # reference (simulating a stale card or re-click) to verify the state
-    # guard still blocks re-execution.
+    # State must remain timeout_ambiguous, NOT change to rejected.
+    assert session_state["proposal_state"] == "timeout_ambiguous"
+    # The pending proposal reference is cleared (card hidden).
+    assert session_state["pending_proposal"] is None
+    # No audit entry — dismiss does not log a rejection.
+    assert len(audit_log) == 0
+
+    # Restore a pending proposal (simulating stale card / re-click).
     session_state["pending_proposal"] = _invoice_pending()
     session_state["pending_proposal_id"] = "test-id-456"
 
     approve_result = app.handle_approve(session_state, audit_log)
     assert approve_result["status"] == "duplicate_rejected"
-    assert "rejected" in approve_result["error"]
-
-
+    assert "timeout_ambiguous" in approve_result["error"]
 # ---------------------------------------------------------------------------
 # 15. Duplicate rejection is logged to the audit log
 # ---------------------------------------------------------------------------
 
 
 def test_duplicate_rejection_logged_to_audit():
-    """When approve returns duplicate_rejected, an audit entry with action_type
-    'error' is logged to the audit log."""
+    """When approve returns duplicate_rejected, an audit entry with
+    action_type `duplicate_rejected` is logged."""
     session_state = _session_state(_invoice_pending())
     audit_log = session_state["audit_log"]
 
@@ -464,6 +464,79 @@ def test_duplicate_rejection_logged_to_audit():
     # An audit entry was logged for the duplicate rejection.
     assert len(audit_log) == 1
     entry = audit_log[0]
-    assert entry.action_type == "error"
+    assert entry.action_type == "duplicate_rejected"
     assert "duplicate" in entry.description.lower()
     assert entry.proposal_id == "test-id-123"
+
+
+# ---------------------------------------------------------------------------
+# 16. Repeated reruns do not make a timeout_ambiguous proposal approvable
+# ---------------------------------------------------------------------------
+
+def test_repeated_reruns_do_not_make_proposal_approvable():
+    """Repeated reruns do not change a timeout_ambiguous state.
+    The state guard blocks re-execution after every rerun."""
+    session_state = _session_state(_invoice_pending(), state="timeout_ambiguous")
+    audit_log = session_state["audit_log"]
+    # Simulate 5 reruns: state is read from session_state each time.
+    for _ in range(5):
+        assert session_state["proposal_state"] == "timeout_ambiguous"
+    # Dismiss (card cleared) then restore a reference.
+    app.handle_dismiss(session_state)
+    assert session_state["proposal_state"] == "timeout_ambiguous"
+    session_state["pending_proposal"] = _invoice_pending()
+    session_state["pending_proposal_id"] = "stale-id-from-rerun"
+    result = app.handle_approve(session_state, audit_log)
+    assert result["status"] == "duplicate_rejected"
+
+
+# ---------------------------------------------------------------------------
+# 17. Clarification does not replace or clear the existing proposal
+# ---------------------------------------------------------------------------
+
+def test_clarification_does_not_replace_existing_proposal():
+    """A chat message where extract_proposal returns None does not
+    clear or replace the existing pending proposal."""
+    original_data = _invoice_pending()
+    session_state = _session_state(original_data)
+    original_id = session_state["pending_proposal_id"]
+    audit_log = session_state["audit_log"]
+    # extract_proposal returns None for a clarification.
+    proposal = app.extract_proposal({"messages": []})
+    assert proposal is None
+    # auto_reject_old_proposal is NOT called because no new proposal was extracted.
+    if proposal is not None:
+        app.auto_reject_old_proposal(session_state, audit_log)
+    # Original proposal is still present and unchanged.
+    assert session_state["pending_proposal"] is original_data
+    assert session_state["pending_proposal_id"] == original_id
+    assert session_state["proposal_state"] == "pending"
+    assert len(audit_log) == 0
+
+
+# ---------------------------------------------------------------------------
+# 18. New proposal replaces old according to single-proposal policy
+# ---------------------------------------------------------------------------
+
+def test_new_proposal_uses_single_proposal_policy():
+    """When a new proposal is extracted while one is pending,
+    the old one is auto-rejected and the new one takes its place."""
+    old_data = _invoice_pending()
+    session_state = _session_state(old_data)
+    old_id = session_state["pending_proposal_id"]
+    audit_log = session_state["audit_log"]
+    # A new proposal is extracted.
+    new_data = _reminder_pending()
+    # Only when a new proposal IS extracted, auto-reject the old one.
+    app.auto_reject_old_proposal(session_state, audit_log)
+    new_id = "new-proposal-id"
+    session_state["pending_proposal"] = new_data
+    session_state["pending_proposal_id"] = new_id
+    session_state["proposal_state"] = "pending"
+    # Old proposal was rejected.
+    rejected = [e for e in audit_log if e.action_type == "rejected"]
+    assert len(rejected) == 1
+    assert rejected[0].proposal_id == old_id
+    # New proposal is now active.
+    assert session_state["pending_proposal"] is new_data
+    assert session_state["pending_proposal_id"] == new_id

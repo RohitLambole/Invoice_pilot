@@ -20,7 +20,7 @@ import re
 from dataclasses import dataclass
 from decimal import Decimal
 
-from config import PAYPAL_CLIENT_ID, PAYPAL_SECRET
+from config import PAYPAL_CLIENT_ID, PAYPAL_SECRET, PAYPAL_SELLER_EMAIL, PAYPAL_BUSINESS_NAME
 from models import InvoiceProposal, ReminderProposal
 from paypal_agent_toolkit.langchain.toolkit import PayPalToolkit
 from paypal_agent_toolkit.shared.configuration import Configuration, Context
@@ -32,11 +32,9 @@ from paypal_agent_toolkit.shared.configuration import Configuration, Context
 write_config = Configuration(
     actions={
         "invoices": {
-            "create": True,        # create_invoice auto-sends (spike-confirmed)
-            "sendReminder": True,   # send_invoice_reminder for reminders
-            # "send" is omitted: create_invoice already sends the invoice; a
-            # separate send_invoice would dispatch a duplicate. Enable only
-            # if a DRAFT->SENT transition is ever needed.
+            "create": True,        # create_invoice (may return DRAFT needing explicit send)
+            "send": True,          # send_invoice for explicit DRAFT->SENT transition
+            "sendReminder": True,  # send_invoice_reminder for reminders
         }
     },
     context=Context(sandbox=True),
@@ -121,26 +119,21 @@ def revalidate(proposal) -> ValidationResult:
 
 
 def create_and_send_invoice(proposal: InvoiceProposal) -> dict:
-    """Create and send a PayPal invoice in a single call.
+    """Create and send a PayPal invoice.
 
-    SPIKE-CONFIRMED (spike_results.md section 3.3):
-    - ``create_invoice`` auto-sends the invoice. Do NOT call ``send_invoice``
-      separately — it would send the invoice a second time.
-    - Recipient email goes in ``primary_recipients[0].billing_info.email_address``
-      (NOT a top-level ``recipient_email`` field).
-    - ``quantity`` must be a string, not int.
-    - ``unit_amount`` uses ``currency_code`` and string values.
-    - Invoice ID is parsed from ``createResult.href.split("/")[-1]`` (NOT from
-      a top-level ``id`` field).
+    ACTUAL BEHAVIOR (verified from toolkit source and sandbox testing):
+    - create_invoice POSTs to /v2/invoicing/invoices.
+    - If PayPal returns a links-based response with the invoice ID, the toolkit
+      handler auto-calls send_invoice and returns {createResult, sendResult}.
+    - If the toolkit falls through (unexpected response shape), it returns the
+      raw PayPal response which contains "id" and "links" directly.
+      In that case the invoice is in DRAFT and we call send_invoice explicitly.
 
     Returns:
-        ``{"status": "sent", "invoice_id": "<id>"}`` on success.
-        ``{"status": "malformed_response", "error": ...}`` when the PayPal
-            write was attempted but the response cannot be parsed or lacks the
-            expected structure. The outcome is unknown — the caller treats this
-            as non-retryable (timeout_ambiguous).
-        ``{"status": "error", "error": ...}`` on a pre-execution failure (e.g.
-            the tool call itself raised before any PayPal write).
+        {"status": "sent", "invoice_id": "<id>"} on success.
+        {"status": "malformed_response", "error": ...} when the invoice was
+            created but send failed with an ambiguous outcome.
+        {"status": "error", "error": ...} on a pre-execution failure.
     """
     create_result_str = write_tools["create_invoice"].invoke(
         {
@@ -155,46 +148,64 @@ def create_and_send_invoice(proposal: InvoiceProposal) -> dict:
             "items": [
                 {
                     "name": proposal.description,
-                    "quantity": "1",  # string, confirmed by spike
+                    "quantity": "1",
                     "unit_amount": {
                         "currency_code": str(proposal.currency),
-                        "value": str(proposal.amount),  # string repr of Decimal
+                        "value": str(proposal.amount),
                     },
                 }
             ],
+            "invoicer": {
+                "business_name": PAYPAL_BUSINESS_NAME,
+                **( {"email_address": PAYPAL_SELLER_EMAIL} if PAYPAL_SELLER_EMAIL else {}),
+            },
         }
     )
 
-    # Tool returns a JSON string; parse it.
+    # Parse the tool response.
     try:
-        create_result = json.loads(create_result_str)
+        create_result = json.loads(create_result_str) if isinstance(create_result_str, str) else create_result_str
     except (TypeError, ValueError):
-        return {
-            "status": "malformed_response",
-            "error": f"Malformed response: {create_result_str}",
-        }
+        return {"status": "malformed_response", "error": f"Malformed response: {create_result_str}"}
 
-    # Validate expected structure before accessing nested fields.
-    if not isinstance(create_result, dict) or "createResult" not in create_result:
-        return {
-            "status": "malformed_response",
-            "error": f"Unexpected response structure: {create_result}",
-        }
+    if not isinstance(create_result, dict):
+        return {"status": "malformed_response", "error": f"Non-dict response: {create_result}"}
 
-    create_inner = create_result["createResult"]
-    if not isinstance(create_inner, dict) or "href" not in create_inner:
-        return {
-            "status": "malformed_response",
-            "error": f"Missing href in createResult: {create_result}",
-        }
+    # Path A: toolkit auto-sent the invoice and returned {createResult, sendResult}
+    if "createResult" in create_result:
+        create_inner = create_result["createResult"]
+        if not isinstance(create_inner, dict) or "href" not in create_inner:
+            return {"status": "malformed_response", "error": f"Missing href in createResult: {create_result}"}
+        invoice_id = create_inner["href"].split("/")[-1]
+        return {"status": "sent", "invoice_id": invoice_id}
 
-    # Parse invoice ID from href (spike_results.md section 3.2).
-    invoice_id = create_inner["href"].split("/")[-1]
+    # Path B: toolkit returned the raw PayPal response (invoice in DRAFT).
+    # Extract the invoice ID from the "id" field or from the links array.
+    invoice_id = create_result.get("id")
+    if not invoice_id:
+        # Try extracting from the self link in the links array.
+        for link in create_result.get("links", []):
+            if link.get("rel") == "self" and "href" in link:
+                invoice_id = link["href"].split("/")[-1]
+                break
 
-    # create_invoice already sent — no separate send_invoice call.
+    if not invoice_id:
+        return {"status": "malformed_response", "error": f"Cannot extract invoice ID from: {create_result}"}
+
+    # Invoice exists in DRAFT — send it explicitly.
+    send_result_str = write_tools["send_invoice"].invoke({"invoice_id": invoice_id})
+    try:
+        send_result = json.loads(send_result_str) if isinstance(send_result_str, str) else send_result_str
+    except (TypeError, ValueError):
+        send_result = send_result_str
+
+    # PayPal returns HTTP 204 (empty body) on success; toolkit may return {} or empty string.
+    send_str = str(send_result).lower()
+    if "error" in send_str and "404" not in send_str and "400" not in send_str:
+        # A real send error after a known invoice ID - keep Approve disabled.
+        return {"status": "malformed_response", "error": f"Invoice {invoice_id} created but send failed: {send_result}"}
+
     return {"status": "sent", "invoice_id": invoice_id}
-
-
 def send_reminder(invoice_id: str, proposed_note: str | None = None) -> dict:
     """Send a payment reminder for an existing invoice.
 

@@ -101,6 +101,14 @@ if not _gemini_model or not _gemini_model.strip():
     _gemini_model = DEFAULT_GEMINI_MODEL
 GEMINI_MODEL = _gemini_model.strip()
 
+# PAYPAL_SELLER_EMAIL is optional. When set, it is included in
+# invoicer.email_address so PayPal uses the correct sandbox seller account.
+PAYPAL_SELLER_EMAIL = os.environ.get("PAYPAL_SELLER_EMAIL", "").strip() or None
+
+# PAYPAL_BUSINESS_NAME is used in invoicer.business_name (required by PayPal
+# create_invoice schema). Defaults to 'InvoicePilot' if not set.
+PAYPAL_BUSINESS_NAME = os.environ.get("PAYPAL_BUSINESS_NAME", "").strip() or "InvoicePilot"
+
 
 __all__ = [
     "AMOUNT_CAP",
@@ -110,4 +118,6 @@ __all__ = [
     "PAYPAL_SECRET",
     "GOOGLE_API_KEY",
     "GEMINI_MODEL",
+    "PAYPAL_SELLER_EMAIL",
+    "PAYPAL_BUSINESS_NAME",
 ]

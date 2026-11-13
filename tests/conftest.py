@@ -86,6 +86,8 @@ def _install_stubs() -> None:
     config_stub.CURRENCY = "USD"
     config_stub.DEFAULT_GEMINI_MODEL = "gemini-2.5-flash"
     config_stub.GEMINI_MODEL = "gemini-2.5-flash"
+    config_stub.PAYPAL_SELLER_EMAIL = None  # Optional; None means omit email from invoicer
+    config_stub.PAYPAL_BUSINESS_NAME = "InvoicePilot"  # Required by Invoicer schema
     sys.modules["config"] = config_stub
 
 
